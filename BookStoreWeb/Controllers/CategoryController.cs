@@ -1,6 +1,7 @@
 ﻿using BookStoreWeb.Data;
 using BookStoreWeb.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace BookStoreWeb.Controllers
 {
@@ -26,6 +27,20 @@ namespace BookStoreWeb.Controllers
         {
             _db.Categories.Add(category);
             _db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+        public IActionResult Delete()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Delete(int id)
+        {
+            var category = _db.Categories.FirstOrDefault(c => c.ID == id);
+            if (category != null)
+            {
+                _db.Categories.Remove(category);
+            }
             return RedirectToAction("Index");
         }
     }
