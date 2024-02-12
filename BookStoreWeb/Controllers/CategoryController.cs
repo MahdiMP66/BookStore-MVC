@@ -47,5 +47,9 @@ namespace BookStoreWeb.Controllers
             }
             return RedirectToAction("Index");
         }
+        public IActionResult Edit()
+        {
+            return View();
+        }
     }
 }
