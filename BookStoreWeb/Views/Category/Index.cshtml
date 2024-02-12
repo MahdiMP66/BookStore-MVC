@@ -4,19 +4,14 @@
 <div class="container">
     <div>
         <div class="row pt-4 pb-3">
-            <div class="col-5">
+            <div class="col-6">
                 <h2 class="text-primary">Category List</h2>
             </div>
-            <div class="col-7 text-end">
-                <a asp-controller="Category" asp-action="Create" class="row m-1  col-2 btn btn-primary">
-                    <i class="bi bi-plus-square"></i> Create 
+            <div class="col-6 text-end">
+                <a asp-controller="Category" asp-action="Create" class="row m-1   btn btn-primary">
+                    <i class="bi bi-plus-square"></i> Create New Category 
                 </a>
-                <a asp-controller="Category" asp-action="Edit" class="row btn m-1 col-2 btn-outline-primary">
-                    <i class="bi bi-pencil-square"></i> Edit
-                </a> 
-                <a asp-controller="Category" asp-action="Delete" class="row m-1 col-2 btn btn-danger">
-                    <i class="bi bi-x-square"></i> Delete
-                </a>
+                
             </div>
         </div>
     </div>
@@ -35,6 +30,14 @@
                     <td>@item.ID</td>
                     <td>@item.Name</td>
                     <td>@item.DisplayOrder</td>
+                    <td>
+                        <div class="text-end">
+                            <a asp-controller="Category" asp-action="Edit" asp-route-id=@item.ID class="btn btn-primary">
+                                <i class="bi bi-pencil"></i> Edit
+                            </a>
+                            <a asp-controller="Category" asp-action="Delete" asp-route-id="@item.ID" class="btn btn-danger">Delete</a>
+                        </div>
+                    </td>
 
                 </tr>
             }
