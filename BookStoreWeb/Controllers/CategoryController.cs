@@ -39,21 +39,25 @@ namespace BookStoreWeb.Controllers
         }
         public IActionResult Delete(int? id)
         {
-            Category category= _db.Categories.FirstOrDefault(u => u.ID == id)!;
-            _db.Categories.Remove(category);
-            _db.SaveChanges();
-            return RedirectToAction("Index");
+            Category category = _db.Categories.FirstOrDefault(u => u.ID == id)!;
+            if(category == null)
+            {
+                return NotFound();
+            }
+            return View(category);
         }
-        //[HttpPost]
-        //public IActionResult Delete(int id)
-        //{
-        //    var category = _db.Categories.FirstOrDefault(c => c.ID == id);
-        //    if (category != null)
-        //    {
-        //        _db.Categories.Remove(category);
-        //    }
-        //    return RedirectToAction("Index");
-        //}
+        [HttpPost,ActionName("Delete")]
+        public IActionResult PostDelete(int? id)
+        {
+            var category = _db.Categories.FirstOrDefault(c => c.ID == id);
+            if (category != null)
+            {
+                _db.Categories.Remove(category);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return NotFound();
+        }
         public IActionResult Edit(int? id)
         {
             Category? category = _db.Categories.FirstOrDefault(u => u.ID == id);
