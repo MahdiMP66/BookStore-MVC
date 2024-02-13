@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BookStoreWebRazor.Data
 {
-    public class DataConext : DbContext
+    public class DataContext : DbContext
     {
         public DbSet<Category> Categories{ get; set; }
-        public DataConext(DbContextOptions<DataConext> options) : base(options)
+        public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
             
         }
