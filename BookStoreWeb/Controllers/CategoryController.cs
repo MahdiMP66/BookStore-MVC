@@ -13,15 +13,18 @@ namespace BookStoreWeb.Controllers
         {
             _db = db;
         }
+
         public IActionResult Index()
         {
             List<Category> Categories = _db.Categories.ToList();
             return View(Categories);
         }
+
         public IActionResult Create()
         {
             return View();
         }
+
         [HttpPost]
         public IActionResult Create(Category category)
         {
@@ -38,6 +41,7 @@ namespace BookStoreWeb.Controllers
             }
             return View();
         }
+
         public IActionResult Delete(int? id)
         {
             Category category = _db.Categories.FirstOrDefault(u => u.ID == id)!;
@@ -47,6 +51,7 @@ namespace BookStoreWeb.Controllers
             }
             return View(category);
         }
+
         [HttpPost,ActionName("Delete")]
         public IActionResult PostDelete(int? id)
         {

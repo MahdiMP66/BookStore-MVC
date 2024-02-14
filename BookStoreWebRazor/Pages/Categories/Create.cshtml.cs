@@ -20,9 +20,18 @@ namespace BookStoreWebRazor.Pages.Categories
         }
         public IActionResult OnPost()
         {
-            _db.Categories.Add(category);
-            _db.SaveChanges();
-            return Redirect("Index");
+            if(category.Name == category.DisplayOrder.ToString())
+            {
+                ModelState.AddModelError("category.Name", "name and display order must be diferent");
+            }
+            if (ModelState.IsValid)
+            {
+                _db.Categories.Add(category);
+                _db.SaveChanges();
+                TempData["success"] = "Category created successfully";
+                return RedirectToPage("Index");
+            }
+            return Page();
         }
     }
 }
