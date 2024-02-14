@@ -72,6 +72,10 @@ namespace BookStoreWeb.Controllers
         [HttpPost]
         public IActionResult Edit(Category category)
         {
+            if (category.Name == category.DisplayOrder.ToString())
+            {
+                ModelState.AddModelError("name", "Name and Display order can not be same!");
+            }
             if (ModelState.IsValid)
             {
                 _db.Categories.Update(category);
