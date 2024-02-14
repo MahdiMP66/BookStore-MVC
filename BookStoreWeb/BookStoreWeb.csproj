@@ -15,4 +15,10 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BookStore.Models\BookStore.Models.csproj" />
+    <ProjectReference Include="..\BookStore.Utiliy\BookStore.Utiliy.csproj" />
+    <ProjectReference Include="..\BookStoreDataAccess\BookStore.DataAccess.csproj" />
+  </ItemGroup>
+
 </Project>
