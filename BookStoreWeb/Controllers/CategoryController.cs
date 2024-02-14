@@ -1,5 +1,5 @@
-﻿using BookStoreWeb.Data;
-using BookStoreWeb.Models;
+﻿using BookStore.DataAccess;
+using BookStore.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
