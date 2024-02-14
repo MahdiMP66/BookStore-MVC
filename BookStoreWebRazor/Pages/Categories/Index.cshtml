@@ -9,7 +9,7 @@
                 <h2 class="text-primary">Category list</h2>
             </div>
             <div class="col-6 text-end">
-                <a class="row btn btn-primary" asp-page="categories/create">Create new Category</a>
+                <a class="row btn btn-primary" asp-page="/categories/create">Create new Category</a>
             </div>
         </div>
     </div>
@@ -30,8 +30,8 @@
                     <td>@item.DisplayOrder</td>
                     <td>
                         <div class="text-center">
-                            <a class="btn btn-outline-primary col-5" asp-page="Categories/Edit" asp-route-id="@item.ID">Edit</a>
-                            <a class="btn btn-outline-danger col-5" asp-page="Categories/Delete" asp-route-id=@item.ID>Delete</a>
+                            <a class="btn btn-outline-primary col-5" asp-page="/Categories/Edit" asp-route-id="@item.ID">Edit</a>
+                            <a class="btn btn-outline-danger col-5" asp-page="/Categories/Delete" asp-route-id=@item.ID>Delete</a>
                         </div>
                     </td>
                        
