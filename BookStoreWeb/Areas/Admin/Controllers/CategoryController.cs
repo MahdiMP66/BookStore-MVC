@@ -4,7 +4,7 @@ using BookStore.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
-namespace BookStoreWeb.Controllers
+namespace BookStoreWeb.Areas.Admin.Controllers
 {
     public class CategoryController : Controller
     {
@@ -26,7 +26,7 @@ namespace BookStoreWeb.Controllers
         [HttpPost]
         public IActionResult Create(Category category)
         {
-            if(category.Name == category.DisplayOrder.ToString())
+            if (category.Name == category.DisplayOrder.ToString())
             {
                 ModelState.AddModelError("name", "Name and Display order can not be same!");
             }
@@ -42,13 +42,13 @@ namespace BookStoreWeb.Controllers
         public IActionResult Delete(int? id)
         {
             Category category = _categoryRepository.GetSingle(u => u.ID == id);
-            if(category == null)
+            if (category == null)
             {
                 return NotFound();
             }
             return View(category);
         }
-        [HttpPost,ActionName("Delete")]
+        [HttpPost, ActionName("Delete")]
         public IActionResult PostDelete(int? id)
         {
             var category = _categoryRepository.GetSingle(c => c.ID == id);
