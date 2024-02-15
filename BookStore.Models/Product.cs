@@ -12,28 +12,28 @@ namespace BookStore.Models
         [Key]
         public int Id { get; set; }
         [Required]
-        public string Title{ get; set; }
+        public string Title{ get; set; } = string.Empty;
         [Required]
-        public string ISBN { get; set; }
+        public string ISBN { get; set; } = "default";
         [Required]
-        public string Description { get; set; }
+        public string Description { get; set; } = string.Empty;
         [Required]
-        public string Author { get; set; }
+        public string Author { get; set; } = string.Empty;
         [Required]
         [Range(1, 1000)]
-        [Display(Name ="List Price")]
-        public double ListPrice { get; set; }
+        [Display(Name = "List Price")]
+        public double ListPrice { get; set; } = 10;
 
         [Range(1, 1000)]
         [Display(Name = "Price for 1-50")]
-        public double Price { get; set; }
+        public double Price { get; set; } = 10;
 
         [Range(1, 1000)]
         [Display(Name = "Price for 50+")]
-        public double Price50 { get; set; }
+        public double Price50 { get; set; } = 10;
         [Range(1, 1000)]
         [Display(Name = "Price for 100+")]
-        public double Price100 { get; set; }
+        public double Price100 { get; set; } = 10;
 
 
     }
