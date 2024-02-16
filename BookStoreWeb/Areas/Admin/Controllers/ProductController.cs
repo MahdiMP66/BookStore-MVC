@@ -1,16 +1,18 @@
 ﻿using BookStore.DataAccess.IRepository;
 using BookStore.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BookStoreWeb.Areas.Admin.Controllers
 {
     public class ProductController : Controller
     {
         private readonly IProductRepository _productRepository;
-
-        public ProductController(IProductRepository productRepository)
+        private readonly ICategoryRepository _categoryRepository;
+        public ProductController(IProductRepository productRepository, ICategoryRepository categoryRepository)
         {
             _productRepository = productRepository;
+            _categoryRepository = categoryRepository;
         }
         public IActionResult Index()
         {
@@ -19,6 +21,13 @@ namespace BookStoreWeb.Areas.Admin.Controllers
         }
         public IActionResult Create()
         {
+            IEnumerable<SelectListItem> CategoryList = _categoryRepository.GetAll()
+                .Select(c => new SelectListItem
+                {
+                    Text = c.Name,
+                    Value = c.ID.ToString(),
+                });
+            ViewBag.CategoryList = CategoryList;
             return View();
         }
 
