@@ -38,20 +38,25 @@ namespace BookStoreWeb.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Product product)
+        public IActionResult Create(ProductVM request)
         {
-            if(product.Title == product.Description)
+            if(request.Product.Title == request.Product.Description)
             {
                 ModelState.AddModelError("Description", "Title and Description can not be same!");
             }
             if(ModelState.IsValid)
             {
-                _productRepository.Add(product);
+                _productRepository.Add(request.Product);
                 _productRepository.Save();
                 TempData["success"] = "Product added successfully";
                 return RedirectToAction("Index");
             }
-            return View();
+            request.CategoryList = _categoryRepository.GetAll().Select(x => new SelectListItem
+            {
+                Text = x.Name,
+                Value = x.ID.ToString()
+            });
+            return View(request);
         }
 
         public IActionResult Delete(int? id)
