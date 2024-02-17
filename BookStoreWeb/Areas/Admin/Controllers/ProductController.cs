@@ -1,5 +1,6 @@
 ﻿using BookStore.DataAccess.IRepository;
 using BookStore.Models;
+using BookStore.Models.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -27,8 +28,13 @@ namespace BookStoreWeb.Areas.Admin.Controllers
                     Text = c.Name,
                     Value = c.ID.ToString(),
                 });
-            ViewBag.CategoryList = CategoryList;
-            return View();
+            //ViewBag.CategoryList = CategoryList;
+            ProductVM viewModel = new ProductVM()
+            {
+                Product = new Product(),
+                CategoryList = CategoryList
+            };
+            return View(viewModel);
         }
 
         [HttpPost]
