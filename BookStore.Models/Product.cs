@@ -16,7 +16,7 @@ namespace BookStore.Models
         [Required]
         public string Title{ get; set; } = string.Empty;
         [Required]
-        public string ISBN { get; set; } = "default";
+        public string ISBN { get; set; } = string.Empty;
         [Required]
         public string Description { get; set; } = string.Empty;
         [Required]
@@ -24,18 +24,18 @@ namespace BookStore.Models
         [Required]
         [Range(1, 1000)]
         [Display(Name = "List Price")]
-        public double ListPrice { get; set; } = 10;
+        public double ListPrice { get; set; } 
 
         [Range(1, 1000)]
         [Display(Name = "Price for 1-50")]
-        public double Price { get; set; } = 10;
+        public double Price { get; set; } 
 
         [Range(1, 1000)]
         [Display(Name = "Price for 50+")]
-        public double Price50 { get; set; } = 10;
+        public double Price50 { get; set; } 
         [Range(1, 1000)]
         [Display(Name = "Price for 100+")]
-        public double Price100 { get; set; } = 10;
+        public double Price100 { get; set; } 
 
         public int CategoryId { get; set; }
         [ForeignKey("CategoryId")]

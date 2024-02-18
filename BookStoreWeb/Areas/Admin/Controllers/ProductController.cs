@@ -20,7 +20,7 @@ namespace BookStoreWeb.Areas.Admin.Controllers
             var Products =  _productRepository.GetAll().ToList();
             return View(Products);
         }
-        public IActionResult Create()
+        public IActionResult Upsert(int? id)
         {
             IEnumerable<SelectListItem> CategoryList = _categoryRepository.GetAll()
                 .Select(c => new SelectListItem
@@ -34,11 +34,19 @@ namespace BookStoreWeb.Areas.Admin.Controllers
                 Product = new Product(),
                 CategoryList = CategoryList
             };
-            return View(viewModel);
+            if (id == null || id == 0) {
+                
+                return View(viewModel);
+            }
+            else
+            {
+                viewModel.Product = _productRepository.GetSingle(p => p.Id == id);
+                return View(viewModel);
+            }
         }
 
         [HttpPost]
-        public IActionResult Create(ProductVM request)
+        public IActionResult Upsert(ProductVM request)
         {
             if(request.Product.Title == request.Product.Description)
             {
@@ -46,9 +54,18 @@ namespace BookStoreWeb.Areas.Admin.Controllers
             }
             if(ModelState.IsValid)
             {
-                _productRepository.Add(request.Product);
-                _productRepository.Save();
-                TempData["success"] = "Product added successfully";
+                if (request.Product.Id == 0 || request.Product.Id == null)
+                {
+                    _productRepository.Add(request.Product);
+                    _productRepository.Save();
+                    TempData["success"] = "Product added successfully";
+                }
+                else
+                {
+                    _productRepository.Update(request.Product);
+                    _productRepository.Save();
+                    TempData["success"] = "Product updated successfully";
+                }
                 return RedirectToAction("Index");
             }
             request.CategoryList = _categoryRepository.GetAll().Select(x => new SelectListItem
