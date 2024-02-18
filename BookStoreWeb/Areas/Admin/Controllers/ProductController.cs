@@ -10,10 +10,15 @@ namespace BookStoreWeb.Areas.Admin.Controllers
     {
         private readonly IProductRepository _productRepository;
         private readonly ICategoryRepository _categoryRepository;
-        public ProductController(IProductRepository productRepository, ICategoryRepository categoryRepository)
+
+        private  IWebHostEnvironment _webHostEnvironment { get; }
+
+        public ProductController(IProductRepository productRepository,
+            ICategoryRepository categoryRepository,IWebHostEnvironment webHostEnvironment)
         {
             _productRepository = productRepository;
             _categoryRepository = categoryRepository;
+            _webHostEnvironment = webHostEnvironment;
         }
         public IActionResult Index()
         {
@@ -46,7 +51,7 @@ namespace BookStoreWeb.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Upsert(ProductVM request)
+        public IActionResult Upsert(ProductVM request,IFormFile? image)
         {
             if(request.Product.Title == request.Product.Description)
             {
@@ -54,6 +59,18 @@ namespace BookStoreWeb.Areas.Admin.Controllers
             }
             if(ModelState.IsValid)
             {
+                string rootPath = _webHostEnvironment.WebRootPath;
+                if(image != null)
+                {
+                    string filename = Guid.NewGuid().ToString() + Path.GetExtension(image.FileName);
+                    string path = Path.Combine(rootPath, @"Images\Product");
+                    using (var filestream = new FileStream(Path.Combine(path, filename), FileMode.Create))
+                    {
+                        image.CopyTo(filestream);
+                    }
+                    request.Product.ImageUrl = @"Images/Product/" + filename;
+                }
+
                 if (request.Product.Id == 0 || request.Product.Id == null)
                 {
                     _productRepository.Add(request.Product);
