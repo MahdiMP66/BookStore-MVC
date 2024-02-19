@@ -101,16 +101,7 @@ namespace BookStoreWeb.Areas.Admin.Controllers
             return View(request);
         }
 
-        public IActionResult Delete(int? id)
-        {
-            var product = _productRepository.GetSingle(p => p.Id == id);
-            
-            if(product == null)
-            {
-                return NotFound();
-            }
-            return View(product);
-        }
+        
         [HttpPost]
         // [HttpPost,ActionName("Delete")] should be declared like this if wanted to just have int id in arguments
         public IActionResult Delete(Product request)
@@ -128,6 +119,20 @@ namespace BookStoreWeb.Areas.Admin.Controllers
             TempData["success"] = "Product deleted successfully";
             return RedirectToAction("Index");
         }
-        
+
+
+
+
+
+
+
+        #region api calls
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            var productList =  _productRepository.GetAll(includeProperties:"Category").ToList();
+            return Json(new { data = productList });
+        }
+        #endregion
     }
 }
