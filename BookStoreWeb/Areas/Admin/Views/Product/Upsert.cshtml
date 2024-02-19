@@ -13,6 +13,7 @@
     <div class="card-body p-4">
         <form method="post" class="row" enctype="multipart/form-data">
             <input asp-for="Product.Id" hidden />
+            <input asp-for="Product.ImageUrl" hidden />
             <div class="row">
                 <div class="col-10">
                     <div class="border p-3">
@@ -65,8 +66,8 @@
                             <span asp-validation-for="Product.CategoryId" class="text-danger"></span>
                         </div>
                         <div class="form-floating py-1 col-12 m-1">
-                            <input type="file" name="image" asp-for="Product.ImageUrl" class="form-control border-0 mb-1" />
-                            <label asp-for="Product.ImageUrl" class="ms-2"></label>
+                            <input  type="file" name="image"  class="form-control border-0 mb-1" />
+                            <label   asp-for="Product.ImageUrl" class="ms-2"></label>
 
                         </div>
 

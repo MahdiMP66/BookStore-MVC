@@ -62,6 +62,13 @@ namespace BookStoreWeb.Areas.Admin.Controllers
                 string rootPath = _webHostEnvironment.WebRootPath;
                 if(image != null)
                 {
+                    if (!string.IsNullOrEmpty(request.Product.ImageUrl))
+                    {
+                        string oldPath = Path.Combine(rootPath, request.Product.ImageUrl.TrimStart('\\'));
+                        if(System.IO.File.Exists(oldPath))
+                            System.IO.File.Delete(oldPath);
+
+                    }
                     string filename = Guid.NewGuid().ToString() + Path.GetExtension(image.FileName);
                     string path = Path.Combine(rootPath, @"Images\Product");
                     using (var filestream = new FileStream(Path.Combine(path, filename), FileMode.Create))
