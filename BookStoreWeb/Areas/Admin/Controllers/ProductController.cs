@@ -19,10 +19,11 @@ namespace BookStoreWeb.Areas.Admin.Controllers
             _productRepository = productRepository;
             _categoryRepository = categoryRepository;
             _webHostEnvironment = webHostEnvironment;
+            
         }
         public IActionResult Index()
         {
-            var Products =  _productRepository.GetAll().ToList();
+            var Products =  _productRepository.GetAll("Category").ToList();
             return View(Products);
         }
         public IActionResult Upsert(int? id)
