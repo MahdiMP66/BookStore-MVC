@@ -6,15 +6,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <None Remove="0930a7d6-b80f-4466-946b-51e550cc8501.jpg" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="0930a7d6-b80f-4466-946b-51e550cc8501.jpg">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-  </ItemGroup>
-
 </Project>
