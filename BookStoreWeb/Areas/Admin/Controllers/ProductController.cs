@@ -103,6 +103,7 @@ namespace BookStoreWeb.Areas.Admin.Controllers
         public IActionResult Delete(int? id)
         {
             var product = _productRepository.GetSingle(p => p.Id == id);
+            
             if(product == null)
             {
                 return NotFound();
@@ -111,37 +112,21 @@ namespace BookStoreWeb.Areas.Admin.Controllers
         }
         [HttpPost]
         // [HttpPost,ActionName("Delete")] should be declared like this if wanted to just have int id in arguments
-        public IActionResult Delete(Product product)
+        public IActionResult Delete(Product request)
         {
-            _productRepository.Remove(product);
+            var dbProduct = _productRepository.GetSingle(p => p.Id == request.Id);
+            string rootPath = _webHostEnvironment.WebRootPath;
+
+            string imagePath = Path.Combine(rootPath, dbProduct.ImageUrl.TrimStart('\\'));
+            if (System.IO.File.Exists(imagePath))
+            {
+                System.IO.File.Delete(imagePath);
+            }
+            _productRepository.Remove(dbProduct);
             _productRepository.Save();
             TempData["success"] = "Product deleted successfully";
             return RedirectToAction("Index");
         }
-        public IActionResult Edit(int id)
-        {
-            var product = _productRepository.GetSingle(p => p.Id == id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-            return View(product);
-        }
-        [HttpPost]
-        public IActionResult Edit(Product product)
-        {
-            if(product.Title == product.Description)
-            {
-                ModelState.AddModelError("Description", "Title and Description can not be same!");
-            }
-            if (ModelState.IsValid)
-            {
-                _productRepository.Update(product);
-                _productRepository.Save();
-                TempData["success"] = "Product updated successfully";
-                return RedirectToAction("Index");
-            }
-            return View();
-        }
+        
     }
 }
