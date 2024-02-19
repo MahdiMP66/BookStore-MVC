@@ -3,6 +3,7 @@ using BookStore.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookStore.DataAccess.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240215205205_ProductTableAndSeed")]
+    partial class ProductTableAndSeed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -74,18 +77,11 @@ namespace BookStore.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ISBN")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ImageUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -107,8 +103,6 @@ namespace BookStore.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
-
                     b.ToTable("Products");
 
                     b.HasData(
@@ -116,10 +110,8 @@ namespace BookStore.DataAccess.Migrations
                         {
                             Id = 1,
                             Author = "mahdi1",
-                            CategoryId = 2,
                             Description = "desc1",
                             ISBN = "1",
-                            ImageUrl = "",
                             ListPrice = 50.0,
                             Price = 50.0,
                             Price100 = 50.0,
@@ -130,10 +122,8 @@ namespace BookStore.DataAccess.Migrations
                         {
                             Id = 2,
                             Author = "mahdi2",
-                            CategoryId = 2,
                             Description = "desc2",
                             ISBN = "1",
-                            ImageUrl = "",
                             ListPrice = 50.0,
                             Price = 50.0,
                             Price100 = 50.0,
@@ -144,27 +134,14 @@ namespace BookStore.DataAccess.Migrations
                         {
                             Id = 3,
                             Author = "mahdi3",
-                            CategoryId = 2,
                             Description = "desc3",
                             ISBN = "1",
-                            ImageUrl = "",
                             ListPrice = 50.0,
                             Price = 50.0,
                             Price100 = 50.0,
                             Price50 = 50.0,
                             Title = "horor"
                         });
-                });
-
-            modelBuilder.Entity("BookStore.Models.Product", b =>
-                {
-                    b.HasOne("BookStore.Models.Category", "Category")
-                        .WithMany()
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Category");
                 });
 #pragma warning restore 612, 618
         }

@@ -9,8 +9,8 @@ namespace BookStore.DataAccess.IRepository
 {
     public interface IRepository<T> where T : class
     {
-        IEnumerable<T> GetAll();
-        T GetSingle(Expression<Func<T, bool>> filter);
+        IEnumerable<T> GetAll(string? includeProperties = null);
+        T GetSingle(Expression<Func<T, bool>> filter, string? includeProperties = null);
         void Add(T entity);
         void Remove(T entity);
         void RemoveRange(IEnumerable<T> entities);
