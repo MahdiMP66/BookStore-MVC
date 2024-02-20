@@ -101,33 +101,37 @@ namespace BookStoreWeb.Areas.Admin.Controllers
             return View(request);
         }
 
-        public IActionResult Delete(int? id)
-        {
-            var product = _productRepository.GetSingle(p => p.Id == id);
-            
-            if(product == null)
-            {
-                return NotFound();
-            }
-            return View(product);
-        }
-        [HttpPost]
-        // [HttpPost,ActionName("Delete")] should be declared like this if wanted to just have int id in arguments
-        public IActionResult Delete(Product request)
-        {
-            var dbProduct = _productRepository.GetSingle(p => p.Id == request.Id);
-            string rootPath = _webHostEnvironment.WebRootPath;
 
-            string imagePath = Path.Combine(rootPath, dbProduct.ImageUrl.TrimStart('\\'));
-            if (System.IO.File.Exists(imagePath))
+
+
+        #region api calls
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            var productList =  _productRepository.GetAll(includeProperties:"Category").ToList();
+            return Json(new { data = productList });
+        }
+
+        [HttpDelete]
+        public IActionResult Delete(int id)
+        {
+            var dbProduct = _productRepository.GetSingle(p => p.Id == id,"Category");
+            if (dbProduct == null)
             {
-                System.IO.File.Delete(imagePath);
+                return Json(new {success =  false, message = "Error while deleteing"});
+            }
+            string rootPath = _webHostEnvironment.WebRootPath;
+            string delPath = Path.Combine(rootPath, dbProduct.ImageUrl.TrimStart('\\'));
+            if (System.IO.File.Exists(delPath))
+            {
+                System.IO.File.Delete(delPath);
             }
             _productRepository.Remove(dbProduct);
             _productRepository.Save();
-            TempData["success"] = "Product deleted successfully";
-            return RedirectToAction("Index");
+            //TempData["success"] = "Product deleted successfully"; it is handles on product.js
+            return Json(new { success = false, message = "Product deleted successfully" });
         }
-        
+
+        #endregion
     }
 }
