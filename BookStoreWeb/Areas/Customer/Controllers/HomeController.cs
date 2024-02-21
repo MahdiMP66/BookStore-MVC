@@ -23,6 +23,12 @@ namespace BookStoreWeb.Controllers
             return View(productList);
         }
 
+        public IActionResult Details(int pid)
+        {
+            var product = _productRepository.GetSingle(p => p.Id==pid,includeProperties: "Category");
+            return View(product);
+        }
+
         public IActionResult Privacy()
         {
             return View();

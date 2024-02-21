@@ -11,7 +11,7 @@
                         <p class="card-title h5 text-center">@item.Title</p>
                         <p class="card-title h5 text-opacity-75 text-danger-emphasis text-center"> by @item.Author</p>
                         <p class="text-dark text-wrap text-center">@item.ListPrice.ToString("c")</p>
-                        <a href="#" class="btn btn-primary bg-gradient d-block mx-auto">Details</a> 
+                        <a asp-area="Customer" asp-controller="Home" asp-action="Details" asp-route-pid="@item.Id" class="btn btn-primary bg-gradient d-block mx-auto">Details</a> 
                     </div>
                 </div>
             </div>
