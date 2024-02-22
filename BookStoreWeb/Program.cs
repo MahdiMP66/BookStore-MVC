@@ -13,7 +13,22 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<DataContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddIdentity<IdentityUser,IdentityRole>().AddEntityFrameworkStores<DataContext>().AddDefaultTokenProviders();
+builder.Services.AddIdentity<IdentityUser,IdentityRole>(options =>
+{
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequiredLength = 3;
+    options.Password.RequireLowercase = false;
+
+}).AddEntityFrameworkStores<DataContext>().AddDefaultTokenProviders();
+//below service should be after addIdentity to work
+builder.Services.ConfigureApplicationCookie(option =>
+{
+    option.LoginPath = $"/identity/account/login";
+    option.AccessDeniedPath = $"/identity/account/Accessdenied";
+    option.LoginPath = $"/identity/account/logout";
+});
+
 builder.Services.AddRazorPages();
 builder.Services.AddScoped<ICategoryRepository,CategoryRepository>();
 builder.Services.AddScoped<IProductRepository,ProductRepository>();
