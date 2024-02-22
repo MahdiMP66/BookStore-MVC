@@ -5,6 +5,7 @@ using System.Diagnostics;
 
 namespace BookStoreWeb.Controllers
 {
+    [Area("Customer")]
     public class HomeController : Controller
     {
         

@@ -1,12 +1,15 @@
 ﻿using BookStore.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace BookStore.DataAccess
 {
-    public class DataContext : DbContext
+    public class DataContext : IdentityDbContext<IdentityUser>
     {
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<User> Users { get; set; }
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
             
@@ -14,6 +17,7 @@ namespace BookStore.DataAccess
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Category>().HasData(
                 new Category {ID = 1, Name = "Action",DisplayOrder = 2 },
                 new Category { ID = 2, Name = "Drama", DisplayOrder = 2 },
